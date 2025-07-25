@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Homepage from '../pages/Homepage.vue'
+import DefaultLayout from '../layouts/DefaultLayout.vue'
+import AuthLayout from '../layouts/AuthLayout.vue'
+import Home from '../pages/Home.vue'
 import Categories from '../pages/Categories.vue'
 import Product from '../pages/Product.vue'
 import Login from '../pages/Login.vue'
@@ -10,28 +12,40 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Homepage,
+      component: DefaultLayout,
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: Home,
+        },
+        {
+          path: 'categories',
+          name: 'categories',
+          component: Categories,
+        },
+        {
+          path: 'categories/:id',
+          name: 'product',
+          component: Product,
+        },
+      ],
     },
     {
-      path: '/categories',
-      name: 'categories',
-      component: Categories,
-    },
-    {
-      path: '/categories/:id',
-      name: 'product',
-      component: Product,
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login,
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register,
+      path: '/',
+      component: AuthLayout,
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: Login,
+        },
+        {
+          path: 'register',
+          name: 'register',
+          component: Register,
+        },
+      ],
     },
   ],
 })
